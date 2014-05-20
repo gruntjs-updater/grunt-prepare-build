@@ -30,22 +30,42 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     prepare_build: {
-      default_options: {
-        options: {
-        },
-        files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123']
+        prepare : {
+            options : {
+                versionFile : 'private/version.php',
+                versionMatch : /([0.9]*\.[0-9]*\.[0-9*])/g,
+                increasePatch : true,
+
+                commit : true,
+                commitMessage : 'New version <%= versionStr %>',
+
+                tag : true,
+                tagName : 'V<%= versionStr %>',
+                tagMessage : 'New version <%= versionStr %>'
+            }
         }
-      },
-      custom_options: {
-        options: {
-          separator: ': ',
-          punctuation: ' !!!'
-        },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123']
+    },
+    
+    // Commit changes.
+    gitcommit : {
+        prepare : {
+            options : {
+                message : '<%= prepare_build.prepare.options.commitMessage %>'
+            },
+            files : {
+                src: ['private']
+            }
         }
-      }
+    },
+    
+    // Tag last commit.
+    gittag : {
+        prepare : {
+            options : {
+                tag : '<%= prepare_build.prepare.options.tagName %>',
+                message : '<%= prepare_build.prepare.options.tagMessage %>'
+            }
+        }
     },
 
     // Unit tests.
@@ -61,6 +81,7 @@ module.exports = function(grunt) {
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-git');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
@@ -68,6 +89,6 @@ module.exports = function(grunt) {
   grunt.registerTask('test', ['clean', 'prepare_build', 'nodeunit']);
 
   // By default, lint and run all tests.
-  grunt.registerTask('default', ['jshint', 'test']);
+  grunt.registerTask('default', ['prepare_build']);
 
 };
