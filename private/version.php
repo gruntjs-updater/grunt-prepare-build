@@ -1,5 +1,5 @@
 <?php
 
-define('APP_VERSION', '0.1.10');
+define('APP_VERSION', '0.1.20');
 
 print 'Test';
