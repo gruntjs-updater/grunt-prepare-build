@@ -10,9 +10,6 @@
 
 module.exports = function (grunt) {
 
-    // Please see the Grunt documentation for more information regarding task
-    // creation: http://gruntjs.com/creating-tasks
-
     grunt.registerMultiTask('prepare_build', 'The best Grunt plugin ever.', function () {
         var options = this.options({
             versionFile : 'version.php',
@@ -38,7 +35,9 @@ module.exports = function (grunt) {
         // Read the version file.
         var content = grunt.file.read(options.versionFile),
             versionStr = content.match(options.versionMatch),
-            versionArr;
+            versionArr,
+            minor,
+            patch;
 
         // Check if a version number match is found.
         if (!versionStr) {
@@ -50,42 +49,52 @@ module.exports = function (grunt) {
 
         // Check if the version number is valid.
         versionArr = versionStr.toString().split('.');
-        if (versionArr.length !== 3) {
+        if (versionArr.length > 2) {
             // End, Fatal error.
             grunt.fail.fatal('Version number is invalid `' +
-                versionStr + '`.', 1);
+                versionStr + '` use a format like `0.1.2`.', 1);
             return 1;
         }
 
+        // Get the version minor and patch numbers.
+        minor = versionArr.pop();
+        patch = versionArr.pop();
+
         // Increase the version number.
         if (options.increaseMinor) {
-            versionArr[1] = ++versionArr[1];
+            minor = minor + 1;
         }
 
         if (options.increasePatch) {
-            versionArr[2] = ++versionArr[2];
+            patch = patch + 1;
         }
 
+        // Update the version number.
+        versionArr.push(minor, patch);
         versionStr = versionArr.join('.').toString();
         grunt.config.set('versionStr', versionStr);
 
         // Replace version number in the version file.
         content = content.replace(options.versionMatch, versionStr);
         grunt.file.write(options.versionFile, content);
-        
+
         grunt.log.ok('Version updated to ' + versionStr + '.');
 
         // Check if changes need to be commited.
         if (options.commit) {
+            // TODO Use async
             grunt.task.run('gitcommit:prepare');
             grunt.log.ok('Last changes commited.');
         }
 
         // Check if the last commit need to be tagged.
         if (options.tag) {
+            // TODO Use async
             grunt.task.run('gittag:prepare');
             grunt.log.ok('Last commit tagged.');
         }
-    });
 
+        // End.
+        return 0;
+    });
 };
