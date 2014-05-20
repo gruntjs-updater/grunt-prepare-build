@@ -12,16 +12,17 @@ module.exports = function (grunt) {
 
     grunt.registerMultiTask('prepare_build', 'The best Grunt plugin ever.', function () {
         var options = this.options({
-            versionFile : 'version.php',
-            versionMatch : /([0.9]*\.[0-9]*\.[0-9*])/g,
+            versionFile : 'VERSION',
+            versionMatch : /(\d+\.\d+\.\d+)/g,
             increaseMinor : false,
             increasePatch : true,
             //
             commit : true,
-            commitMessage : 'New version <%= versionStr%>',
+            commitMessage : 'New version <%= versionStr %>',
             //
             tag : true,
-            tagMessage : 'V<%= versionStr%>'
+            tagName : 'V<%= versionStr %>',
+            tagMessage : 'New version <%= versionStr %>'
         });
 
         // Check if the version file exists.

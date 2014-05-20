@@ -1,6 +1,7 @@
 # grunt-prepare-build
 
-> The best Grunt plugin ever.
+> A Grunt plugin to prepare your build process.
+  Update the version number, Commit the last changes and create a GIT tag.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
@@ -27,60 +28,109 @@ grunt.initConfig({
   prepare_build: {
     options: {
       // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
+    }
   },
 });
 ```
 
 ### Options
 
-#### options.separator
-Type: `String`
-Default value: `',  '`
+#### options.versionFile
+Type: `String`  
+Default value: `VERSION`
 
-A string value that is used to do something with whatever.
+Name of the file where the version number can be found.
 
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
+#### options.versionMatch
+Type: `RegExp`  
+Default value: `/(\d+\.\d+\.\d+)/g`
 
-A string value that is used to do something else with whatever else.
+Regular expression to isolate the version number string.
+_(Notice the global flag)_
+
+
+#### options.increaseMinor
+Type: `Boolean`  
+Default value: `false`
+
+When `true` the version number, minor section, will be increased by 1.
+
+
+#### options.increasePatch
+Type: `Boolean`  
+Default value: `true`
+
+When `true` the version number, patch section, will be increased by 1.
+
+
+#### options.commit
+Type: `Boolean`  
+Default value: `true`
+
+When `true` all changes will be committed using GIT.  
+_(Notice: When `false` the updated version number will not be committed.)_
+
+
+#### options.commitMessage
+Type: `String`  
+Default value: `'New version <%= versionStr %>`
+
+GIT commit message.
+
+#### options.tag
+Type: `Boolean`  
+Default value: `true`
+
+When `true` a GIT tag will be created.
+
+#### options.tagName
+Type: `String`  
+Default value: `V<%= versionStr %>`
+
+GIT tag name.
+
+#### options.tagMessage
+Type: `String`  
+Default value: `New version <%= versionStr %>`
+
+Git tag message.
 
 ### Usage Examples
 
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
-
 ```js
 grunt.initConfig({
   prepare_build: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
+    build : {
+      options: {
+        versionFile: 'public/app.js',
+        versionMatch: /^var version = (\d+\.\d+\.\d+);$/,
+        increaseMinor: true,
+        commit: true,
+        commitMessage: 'New version <%= versionStr %>.',
+        tag: true,
+        tagName: 'V<%= versionStr %>',
+        tagMessage: 'New release <%= versionStr %>.'
+      }
     },
-  },
+    update : {
+      options: {
+        versionFile: 'public/app.js',
+        versionMatch: /^var version = (\d+\.\d+\.\d+);$/,
+        increasePatch: true,
+        commit: true,
+        commitMessage: 'Small update (<%= versionStr %>).',
+        tag: true,
+        tagName: 'V<%= versionStr %>',
+        tagMessage: 'Small fixes (<%= versionStr %>).'
+      }
+    }
+  }
 });
 ```
 
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+### Template variable
 
-```js
-grunt.initConfig({
-  prepare_build: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
+1. `versionStr` *:* The 
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
