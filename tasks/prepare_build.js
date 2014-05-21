@@ -50,7 +50,7 @@ module.exports = function (grunt) {
 
         // Check if the version number is valid.
         versionArr = versionStr.toString().split('.');
-        if (versionArr.length > 2) {
+        if (versionArr.length < 2) {
             // End, Fatal error.
             grunt.fail.fatal('Version number is invalid `' +
                 versionStr + '` use a format like `0.1.2`.', 1);
@@ -58,16 +58,16 @@ module.exports = function (grunt) {
         }
 
         // Get the version minor and patch numbers.
-        minor = versionArr.pop();
-        patch = versionArr.pop();
-
+        patch = parseInt(versionArr.pop());
+        minor = parseInt(versionArr.pop());
+        
         // Increase the version number.
         if (options.increaseMinor) {
-            minor = minor + 1;
+            minor = ++minor;
         }
 
         if (options.increasePatch) {
-            patch = patch + 1;
+            patch = ++patch;
         }
 
         // Update the version number.
@@ -83,16 +83,13 @@ module.exports = function (grunt) {
 
         // Check if changes need to be commited.
         if (options.commit) {
-            // TODO Use async
             grunt.task.run('gitcommit:prepare');
-            grunt.log.ok('Last changes commited.');
+            
         }
 
         // Check if the last commit need to be tagged.
         if (options.tag) {
-            // TODO Use async
             grunt.task.run('gittag:prepare');
-            grunt.log.ok('Last commit tagged.');
         }
 
         // End.

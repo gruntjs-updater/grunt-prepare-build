@@ -32,8 +32,8 @@ module.exports = function(grunt) {
     prepare_build: {
         prepare : {
             options : {
-                versionFile : 'private/version.php',
-                versionMatch : /([0.9]*\.[0-9]*\.[0-9*])/g,
+                versionFile : '../version.php',
+                versionMatch : /(\d+\.\d+\.\d+)/g,
                 increasePatch : true,
 
                 commit : true,
@@ -50,7 +50,8 @@ module.exports = function(grunt) {
     gitcommit : {
         prepare : {
             options : {
-                message : '<%= prepare_build.prepare.options.commitMessage %>'
+                message : '<%= prepare_build.prepare.options.commitMessage %>',
+                ignoreEmpty: true
             },
             files : {
                 src: ['private']
