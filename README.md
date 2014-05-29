@@ -58,14 +58,14 @@ When `true` the version number, minor section, will be increased by 1.
 
 #### options.increasePatch
 Type: `Boolean`  
-Default value: `true`
+Default value: `false`
 
 When `true` the version number, patch section, will be increased by 1.
 
 
 #### options.commit
 Type: `Boolean`  
-Default value: `true`
+Default value: `false`
 
 When `true` all changes will be committed using GIT.  
 _(Notice: When `false` the updated version number will not be committed.)_
@@ -79,7 +79,7 @@ GIT commit message.
 
 #### options.tag
 Type: `Boolean`  
-Default value: `true`
+Default value: `false`
 
 When `true` a GIT tag will be created.
 

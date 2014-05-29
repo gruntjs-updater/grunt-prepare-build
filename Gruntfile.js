@@ -34,12 +34,12 @@ module.exports = function(grunt) {
             options : {
                 versionFile : '../version.php',
                 versionMatch : /(\d+\.\d+\.\d+)/g,
-                increasePatch : true,
+                increasePatch : false,
 
-                commit : true,
+                commit : false,
                 commitMessage : 'New version <%= versionStr %>',
 
-                tag : true,
+                tag : false,
                 tagName : 'V<%= versionStr %>',
                 tagMessage : 'New version <%= versionStr %>'
             }
