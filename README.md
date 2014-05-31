@@ -37,7 +37,7 @@ grunt.initConfig({
 
 #### options.versionFile
 Type: `String`  
-Default value: `VERSION`
+Default value: `VERSION.js`
 
 Name of the file where the version number can be found.
 

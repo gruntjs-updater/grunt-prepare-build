@@ -10,17 +10,18 @@
 
 module.exports = function (grunt) {
 
-    grunt.registerMultiTask('prepare_build', 'The best Grunt plugin ever.', function () {
+    grunt.registerMultiTask('prepare_build', 'The best Grunt plugin ever.', function ()
+    {
         var options = this.options({
-            versionFile : 'VERSION',
+            versionFile : 'VERSION.js',
             versionMatch : /(\d+\.\d+\.\d+)/g,
             increaseMinor : false,
-            increasePatch : true,
+            increasePatch : false,
             //
-            commit : true,
+            commit : false,
             commitMessage : 'New version <%= versionStr %>',
             //
-            tag : true,
+            tag : false,
             tagName : 'V<%= versionStr %>',
             tagMessage : 'New version <%= versionStr %>'
         });
@@ -29,7 +30,7 @@ module.exports = function (grunt) {
         if (!grunt.file.isFile(options.versionFile)) {
             // End, Fatal error.
             grunt.fail.fatal('Version file `' +
-                options.versionFile + '`not found.', 1);
+                options.versionFile + '` not found.', 1);
             return 1;
         }
 
@@ -60,7 +61,7 @@ module.exports = function (grunt) {
         // Get the version minor and patch numbers.
         patch = parseInt(versionArr.pop());
         minor = parseInt(versionArr.pop());
-        
+
         // Increase the version number.
         if (options.increaseMinor) {
             minor = ++minor;
@@ -84,7 +85,7 @@ module.exports = function (grunt) {
         // Check if changes need to be commited.
         if (options.commit) {
             grunt.task.run('gitcommit:prepare');
-            
+
         }
 
         // Check if the last commit need to be tagged.
