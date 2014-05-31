@@ -23,23 +23,18 @@ module.exports = function(grunt) {
       }
     },
 
-    // Before generating any new files, remove any previously-created files.
-    clean: {
-      tests: ['tmp']
-    },
-
     // Configuration to be run (and then tested).
     prepare_build: {
         prepare : {
             options : {
-                versionFile : '../version.php',
+                versionFile : 'VERSION',
                 versionMatch : /(\d+\.\d+\.\d+)/g,
-                increasePatch : false,
+                increasePatch : true,
 
-                commit : false,
+                commit : true,
                 commitMessage : 'New version <%= versionStr %>',
 
-                tag : false,
+                tag : true,
                 tagName : 'V<%= versionStr %>',
                 tagMessage : 'New version <%= versionStr %>'
             }
@@ -71,7 +66,10 @@ module.exports = function(grunt) {
 
     // Unit tests.
     nodeunit: {
-      tests: ['test/*_test.js']
+        options: {
+            reporter: 'verbose'
+        },
+        tests: ['test/*_test.js']
     }
 
   });
@@ -81,13 +79,12 @@ module.exports = function(grunt) {
 
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-git');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'prepare_build', 'nodeunit']);
+  grunt.registerTask('test', ['jshint', 'nodeunit']);
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['prepare_build']);
