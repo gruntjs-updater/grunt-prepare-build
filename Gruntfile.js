@@ -55,11 +55,11 @@ module.exports = function(grunt) {
                 increasePatch : true,
 
                 commit : true,
-                commitMessage : 'New version <%= versionStr %>',
+                commitMessage : 'New version',
 
-                tag : true,
-                tagName : 'V<%= versionStr %>',
-                tagMessage : 'New version <%= versionStr %>'
+                tag : false,
+                tagName : 'V',
+                tagMessage : 'New version'
             }
         }
     },

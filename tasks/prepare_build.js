@@ -89,12 +89,12 @@ module.exports = function (grunt) {
             // task, but it works.
             grunt.config('gitcommit.prepare', {
                 options : {
-                    message : options.commitMessage,
+                    message : options.commitMessage + ' ' + versionStr,
                     ignoreEmpty : true
                 },
                 files : {
                     src : [
-                        'private'
+                        '.'
                     ]
                 }
             });
@@ -107,8 +107,8 @@ module.exports = function (grunt) {
         if (options.tag) {
             grunt.config('gittag.prepare', {
                 options : {
-                    tag : options.tagName,
-                    message : options.tagMessage
+                    tag : options.tagName + versionStr,
+                    message : options.tagMessage + ' ' + versionStr
                 }
             });
 
