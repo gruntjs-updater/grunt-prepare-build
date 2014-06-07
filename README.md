@@ -75,9 +75,16 @@ _(Notice: When `false` the updated version number will not be committed.)_
 
 #### options.commitMessage
 Type: `String`  
-Default value: `'New version <%= versionStr %>`
+Default value: `New version`
 
-GIT commit message.
+GIT commit message.  
+_(Notice: The version number will added to the end of the commitMessage.)_
+
+#### options.commitFiles
+Type: `String`  
+Default value: `.`
+
+GIT commit files.
 
 #### options.tag
 Type: `Boolean`  
@@ -87,15 +94,17 @@ When `true` a GIT tag will be created.
 
 #### options.tagName
 Type: `String`  
-Default value: `V<%= versionStr %>`
+Default value: `V`
 
-GIT tag name.
+GIT tag name.  
+_(Notice: The version number will added to the end of the tagName.)_
 
 #### options.tagMessage
 Type: `String`  
-Default value: `New version <%= versionStr %>`
+Default value: `New version`
 
-Git tag message.
+Git tag message.  
+_(Notice: The version number will added to the end of the tagMessage.)_
 
 ### Usage Examples
 
@@ -105,25 +114,27 @@ grunt.initConfig({
     build : {
       options: {
         versionFile: 'public/app.js',
-        versionMatch: /^var version = (\d+\.\d+\.\d+);$/,
+        versionMatch: /(\d+\.\d+\.\d+)/,
         increaseMinor: true,
         commit: true,
-        commitMessage: 'New version <%= versionStr %>.',
+        commitMessage: 'New version',
+        commitFiles: '.'
         tag: true,
-        tagName: 'V<%= versionStr %>',
-        tagMessage: 'New release <%= versionStr %>.'
+        tagName: 'V',
+        tagMessage: 'New release'
       }
     },
     update : {
       options: {
         versionFile: 'public/app.js',
-        versionMatch: /^var version = (\d+\.\d+\.\d+);$/,
+        versionMatch: /(\d+\.\d+\.\d+)/,
         increasePatch: true,
         commit: true,
-        commitMessage: 'Small update (<%= versionStr %>).',
+        commitMessage: 'Small update',
+        commitFiles: '.'
         tag: true,
-        tagName: 'V<%= versionStr %>',
-        tagMessage: 'Small fixes (<%= versionStr %>).'
+        tagName: 'V',
+        tagMessage: 'Small fixes'
       }
     }
   }
@@ -134,5 +145,6 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+* 2014-06-07   v0.1.3   Add commitFiles option.
 * 2014-06-07   v0.1.2   Dont require gitcommit and gittag configuration in the Gruntfile anymore.
 * 2014-06-01   v0.1.1   Add Travis ci and some small fixes.
