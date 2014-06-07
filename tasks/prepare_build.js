@@ -10,6 +10,7 @@
 
 module.exports = function (grunt) {
 
+    // TODO Update title
     grunt.registerMultiTask('prepare_build', 'The best Grunt plugin ever.', function ()
     {
         var options = this.options({
@@ -80,16 +81,37 @@ module.exports = function (grunt) {
         content = content.replace(options.versionMatch, versionStr);
         grunt.file.write(options.versionFile, content);
 
-        grunt.log.ok('Version updated to ' + versionStr + '.');
+        grunt.log.write('Version updated to ' + versionStr + '.');
 
         // Check if changes need to be commited.
         if (options.commit) {
+            // Have no idea if this is the right way to configur and run another
+            // task, but it works.
+            grunt.config('gitcommit.prepare', {
+                options : {
+                    message : options.commitMessage,
+                    ignoreEmpty : true
+                },
+                files : {
+                    src : [
+                        'private'
+                    ]
+                }
+            });
+
             grunt.task.run('gitcommit:prepare');
 
         }
 
         // Check if the last commit need to be tagged.
         if (options.tag) {
+            grunt.config('gittag.prepare', {
+                options : {
+                    tag : options.tagName,
+                    message : options.tagMessage
+                }
+            });
+
             grunt.task.run('gittag:prepare');
         }
 

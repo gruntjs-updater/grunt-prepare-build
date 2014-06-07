@@ -65,27 +65,27 @@ module.exports = function(grunt) {
     },
     
     // Commit changes.
-    gitcommit : {
-        prepare : {
-            options : {
-                message : '<%= prepare_build.prepare.options.commitMessage %>',
-                ignoreEmpty: true
-            },
-            files : {
-                src: ['private']
-            }
-        }
-    },
+//    gitcommit : {
+//        prepare : {
+//            options : {
+//                message : '<%= prepare_build.prepare.options.commitMessage %>',
+//                ignoreEmpty: true
+//            },
+//            files : {
+//                src: ['private']
+//            }
+//        }
+//    },
     
     // Tag last commit.
-    gittag : {
-        prepare : {
-            options : {
-                tag : '<%= prepare_build.prepare.options.tagName %>',
-                message : '<%= prepare_build.prepare.options.tagMessage %>'
-            }
-        }
-    },
+//    gittag : {
+//        prepare : {
+//            options : {
+//                tag : '<%= prepare_build.prepare.options.tagName %>',
+//                message : '<%= prepare_build.prepare.options.tagMessage %>'
+//            }
+//        }
+//    },
 
     // Unit tests.
     nodeunit: {

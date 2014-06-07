@@ -31,7 +31,7 @@ grunt.initConfig({
     options: {
       // Task-specific options go here.
     }
-  },
+  }
 });
 ```
 
@@ -130,12 +130,9 @@ grunt.initConfig({
 });
 ```
 
-### Template variable
-
-1. `versionStr` *:* The 
-
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-_(Nothing yet)_
+* 2014-06-07   v0.1.2   Dont require gitcommit and gittag configuration in the Gruntfile anymore.
+* 2014-06-01   v0.1.1   Add Travis ci and some small fixes.
