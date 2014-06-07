@@ -56,6 +56,7 @@ module.exports = function(grunt) {
 
                 commit : true,
                 commitMessage : 'New version',
+                commitFiles : '.',
 
                 tag : false,
                 tagName : 'V',
@@ -63,29 +64,6 @@ module.exports = function(grunt) {
             }
         }
     },
-    
-    // Commit changes.
-//    gitcommit : {
-//        prepare : {
-//            options : {
-//                message : '<%= prepare_build.prepare.options.commitMessage %>',
-//                ignoreEmpty: true
-//            },
-//            files : {
-//                src: ['private']
-//            }
-//        }
-//    },
-    
-    // Tag last commit.
-//    gittag : {
-//        prepare : {
-//            options : {
-//                tag : '<%= prepare_build.prepare.options.tagName %>',
-//                message : '<%= prepare_build.prepare.options.tagMessage %>'
-//            }
-//        }
-//    },
 
     // Unit tests.
     nodeunit: {

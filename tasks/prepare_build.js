@@ -21,6 +21,7 @@ module.exports = function (grunt) {
             //
             commit : false,
             commitMessage : 'New version <%= versionStr %>',
+            commitFiles : '.',
             //
             tag : false,
             tagName : 'V<%= versionStr %>',
@@ -94,7 +95,7 @@ module.exports = function (grunt) {
                 },
                 files : {
                     src : [
-                        '.'
+                        options.commitFiles
                     ]
                 }
             });
