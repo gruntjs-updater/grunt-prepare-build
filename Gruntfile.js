@@ -58,7 +58,7 @@ module.exports = function(grunt) {
                 commitMessage : 'New version',
                 commitFiles : '.',
 
-                tag : false,
+                tag : true,
                 tagName : 'V',
                 tagMessage : 'New version'
             }
