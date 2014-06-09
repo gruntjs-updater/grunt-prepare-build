@@ -1,6 +1,6 @@
 # grunt-prepare-build
 
-> A Grunt plugin to prepare your build process.
+> A Grunt plugin to prepare your build process.  
   Update the version number, Commit the last changes and create a GIT tag.
 
 [![Build Status](https://travis-ci.org/WitteStier/grunt-prepare-build.svg?branch=master)](https://travis-ci.org/WitteStier/grunt-prepare-build)

@@ -10,8 +10,7 @@
 
 module.exports = function (grunt) {
 
-    // TODO Update title
-    grunt.registerMultiTask('prepare_build', 'The best Grunt plugin ever.', function ()
+    grunt.registerMultiTask('prepare_build', 'A Grunt plugin to prepare your build process.', function ()
     {
         var options = this.options({
             versionFile : 'VERSION.js',
@@ -20,12 +19,12 @@ module.exports = function (grunt) {
             increasePatch : false,
             //
             commit : false,
-            commitMessage : 'New version <%= versionStr %>',
+            commitMessage : 'New version',
             commitFiles : '.',
             //
             tag : false,
-            tagName : 'V<%= versionStr %>',
-            tagMessage : 'New version <%= versionStr %>'
+            tagName : 'V',
+            tagMessage : 'New version'
         });
 
         // Check if the version file exists.
