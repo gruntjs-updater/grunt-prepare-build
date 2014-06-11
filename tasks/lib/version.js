@@ -73,7 +73,7 @@ exports.init = function (grunt)
         grunt.log.write('OK. Updated to ' + versionStr + '.');
 
         // End.
-        return 0;
+        return versionStr;
     };
 
     // End.
