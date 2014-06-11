@@ -35,9 +35,7 @@ module.exports = function (grunt) {
             tagMessage : 'New version'
         });
 
-        var versionStr;
-
-        versionStr = version.increase(options);
+        var versionStr = version.increase(options);
 
         if (options.env) {
             // Update the environment string.
