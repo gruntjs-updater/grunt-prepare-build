@@ -1,2 +1,2 @@
-var env = 'testing';
-var ver = '0.0.2';
+var env = 'testingg';
+var ver = '0.0.4';
