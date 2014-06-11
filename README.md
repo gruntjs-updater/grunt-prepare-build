@@ -47,9 +47,33 @@ Name of the file where the version number can be found.
 Type: `RegExp`  
 Default value: `/(\d+\.\d+\.\d+)/g`
 
-Regular expression to isolate the version number string.
+Regular expression to isolate the version number string.  
 _(Notice the global flag)_
 
+#### options.env
+Type: `Boolean`  
+Default value: `false`
+
+When `true` the environment string will be updated with the `envName` value.
+
+#### options.envFile
+Type: `String`  
+Default value: `VERSION.js`
+
+Name of the file where the environment string can be found.
+
+#### options.envMatch
+Type: `RegExp`  
+Default value: `/development/g`
+
+Regular expression to isolate the environment string.  
+_(Notice the global flag)_
+
+#### options.envName
+Type: `String`  
+Default value: `production`
+
+New environment name.
 
 #### options.increaseMinor
 Type: `Boolean`  
@@ -57,13 +81,11 @@ Default value: `false`
 
 When `true` the version number, minor section, will be increased by 1.
 
-
 #### options.increasePatch
 Type: `Boolean`  
 Default value: `false`
 
 When `true` the version number, patch section, will be increased by 1.
-
 
 #### options.commit
 Type: `Boolean`  
@@ -71,7 +93,6 @@ Default value: `false`
 
 When `true` all changes will be committed using GIT.  
 _(Notice: When `false` the updated version number will not be committed.)_
-
 
 #### options.commitMessage
 Type: `String`  
@@ -116,9 +137,16 @@ grunt.initConfig({
         versionFile: 'public/app.js',
         versionMatch: /(\d+\.\d+\.\d+)/,
         increaseMinor: true,
+        //
+        env : true,
+        envFile : 'VERSION.js',
+        envMatch : /development/g,
+        envName : 'production',
+        //
         commit: true,
         commitMessage: 'New version',
         commitFiles: '.'
+        //
         tag: true,
         tagName: 'V',
         tagMessage: 'New release'
@@ -129,9 +157,16 @@ grunt.initConfig({
         versionFile: 'public/app.js',
         versionMatch: /(\d+\.\d+\.\d+)/,
         increasePatch: true,
+        //
+        env : true,
+        envFile : 'public/env.js',
+        envMatch : /development/g,
+        envName : 'testing',
+        //
         commit: true,
         commitMessage: 'Small update',
         commitFiles: '.'
+        //
         tag: true,
         tagName: 'V',
         tagMessage: 'Small fixes'
@@ -145,6 +180,7 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+* 2014-06-12   v0.2.0   Add update environment option.
 * 2014-06-07   v0.1.3   Add commitFiles option.
 * 2014-06-07   v0.1.2   Dont require gitcommit and gittag configuration in the Gruntfile anymore.
 * 2014-06-01   v0.1.1   Add Travis ci and some small fixes.

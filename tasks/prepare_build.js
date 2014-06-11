@@ -10,6 +10,9 @@
 
 module.exports = function (grunt) {
 
+    var version = require('./lib/version').init(grunt);
+    var environment = require('./lib/environment').init(grunt);
+
     grunt.registerMultiTask('prepare_build', 'A Grunt plugin to prepare your build process.', function ()
     {
         var options = this.options({
@@ -17,6 +20,11 @@ module.exports = function (grunt) {
             versionMatch : /(\d+\.\d+\.\d+)/g,
             increaseMinor : false,
             increasePatch : false,
+            //
+            env : true,
+            envFile : 'VERSION.js',
+            envMatch : /development/g,
+            envName : 'production',
             //
             commit : false,
             commitMessage : 'New version',
@@ -27,66 +35,17 @@ module.exports = function (grunt) {
             tagMessage : 'New version'
         });
 
-        // Check if the version file exists.
-        if (!grunt.file.isFile(options.versionFile)) {
-            // End, Fatal error.
-            grunt.fail.fatal('Version file `' +
-                options.versionFile + '` not found.', 1);
-            return 1;
+        var versionStr;
+
+        versionStr = version.increase(options);
+
+        if (options.env) {
+            // Update the environment string.
+            environment.update(options);
         }
 
-        // Read the version file.
-        var content = grunt.file.read(options.versionFile),
-            versionStr = content.match(options.versionMatch),
-            versionArr,
-            minor,
-            patch;
-
-        // Check if a version number match is found.
-        if (!versionStr) {
-            // End, Fatal error.
-            grunt.fail.fatal('Version number not found in `' +
-                options.versionFile + '`.', 1);
-            return 1;
-        }
-
-        // Check if the version number is valid.
-        versionArr = versionStr.toString().split('.');
-        if (versionArr.length < 2) {
-            // End, Fatal error.
-            grunt.fail.fatal('Version number is invalid `' +
-                versionStr + '` use a format like `0.1.2`.', 1);
-            return 1;
-        }
-
-        // Get the version minor and patch numbers.
-        patch = parseInt(versionArr.pop());
-        minor = parseInt(versionArr.pop());
-
-        // Increase the version number.
-        if (options.increaseMinor) {
-            minor = ++minor;
-        }
-
-        if (options.increasePatch) {
-            patch = ++patch;
-        }
-
-        // Update the version number.
-        versionArr.push(minor, patch);
-        versionStr = versionArr.join('.').toString();
-        grunt.config.set('versionStr', versionStr);
-
-        // Replace version number in the version file.
-        content = content.replace(options.versionMatch, versionStr);
-        grunt.file.write(options.versionFile, content);
-
-        grunt.log.write('Version updated to ' + versionStr + '.');
-
-        // Check if changes need to be commited.
         if (options.commit) {
-            // Have no idea if this is the right way to configur and run another
-            // task, but it works.
+            // Commit last changes.
             grunt.config('gitcommit.prepare', {
                 options : {
                     message : options.commitMessage + ' ' + versionStr,
@@ -100,11 +59,10 @@ module.exports = function (grunt) {
             });
 
             grunt.task.run('gitcommit:prepare');
-
         }
 
-        // Check if the last commit need to be tagged.
         if (options.tag) {
+            // Create a tag.
             grunt.config('gittag.prepare', {
                 options : {
                     tag : options.tagName + versionStr,

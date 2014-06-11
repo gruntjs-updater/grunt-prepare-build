@@ -50,9 +50,15 @@ module.exports = function(grunt) {
     prepare_build: {
         prepare : {
             options : {
-                versionFile : 'VERSION',
+                versionFile : 'VERSION.js',
                 versionMatch : /(\d+\.\d+\.\d+)/g,
                 increasePatch : true,
+                buildDate : true,
+                
+                env : true,
+                envFile : 'VERSION.js',
+                envMatch : /development/g,
+                envName : 'testing',
 
                 commit : true,
                 commitMessage : 'New version',

@@ -105,6 +105,10 @@ exports.prepare_build = {
 
         // End.
     },
+//    envFileNotFound : function(test)
+//    {},
+//    envStringNotFound : function(test)
+//    {},
     increaseMinor : function (test)
     {
         test.expect(2);
