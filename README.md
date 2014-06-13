@@ -5,6 +5,8 @@
 
 [![Build Status](https://travis-ci.org/WitteStier/grunt-prepare-build.svg?branch=master)](https://travis-ci.org/WitteStier/grunt-prepare-build)
 
+[![NPM](https://nodei.co/npm/grunt-prepare-build.png)](https://nodei.co/npm/grunt-prepare-build/)
+
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
 
