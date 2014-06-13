@@ -1,7 +1,7 @@
 {
     "name" : "grunt-prepare-build",
     "description" : "A Grunt plugin to prepare your build process. Update the version number, Commit the last changes and create a GIT tag.",
-    "version" : "0.1.3",
+    "version" : "0.1.4",
     "homepage" : "https://github.com/WitteStier/grunt-prepare-build",
     "author" : {
         "name" : "WitteStier",
