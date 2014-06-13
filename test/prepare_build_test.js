@@ -105,13 +105,83 @@ exports.prepare_build = {
 
         // End.
     },
-//    envFileNotFound : function(test)
-//    {},
-//    envStringNotFound : function(test)
-//    {},
-    increaseMinor : function (test)
+    envFileNotFound : function (test)
     {
         test.expect(2);
+
+        grunt.util.spawn({
+            grunt : true,
+            args : [
+                '--gruntfile',
+                'test/fixtures/env-file-not-found.js'
+            ]
+        },
+        function (error, output, code)
+        {
+            var i = output.stdout.indexOf('Fatal error: Environment file `foo` not found.');
+
+            test.strictEqual(code, 1, 'Grunt should fail.');
+            test.notStrictEqual(-1, i, 'Should output file not found error.');
+
+            test.done();
+
+            // End.
+        });
+
+        // End.
+    },
+    envStringNotFound : function (test)
+    {
+        test.expect(2);
+
+        grunt.util.spawn({
+            grunt : true,
+            args : [
+                '--gruntfile',
+                'test/fixtures/env-string-not-found.js'
+            ]
+        },
+        function (error, output, code)
+        {
+            var i = output.stdout.indexOf('Fatal error: Environment not found in `NO_ENV.js`.');
+
+            test.strictEqual(code, 1, 'Grunt should fail.');
+            test.notStrictEqual(-1, i, 'Should output file not found error.');
+
+            test.done();
+
+            // End.
+        });
+
+        // End.
+    },
+    updateEnvString : function (test)
+    {
+        test.expect(1);
+
+        grunt.util.spawn({
+            grunt : true,
+            args : [
+                '--gruntfile',
+                'test/fixtures/env-updated.js'
+            ]
+        },
+        function (error, output, code)
+        {
+            var i = grunt.file.read('tmp/test/fixtures/ENV_DEVELOPMENT.js').indexOf('testing');
+
+            test.notStrictEqual(-1, i, 'Should update the environment value.');
+
+            test.done();
+
+            // End.
+        });
+
+        // End.
+    },
+    increaseMinor : function (test)
+    {
+        test.expect(1);
 
         grunt.util.spawn({
             grunt : true,
@@ -124,7 +194,6 @@ exports.prepare_build = {
         {
             var i = grunt.file.read('tmp/test/fixtures/VERSION_MINOR.js').indexOf('0.1.1');
 
-            test.strictEqual(code, 0, 'Grunt should finish without errors.');
             test.notStrictEqual(-1, i, 'Should increase the version minor value.');
 
             test.done();
@@ -136,7 +205,7 @@ exports.prepare_build = {
     },
     increasePatch : function (test)
     {
-        test.expect(2);
+        test.expect(1);
 
         grunt.util.spawn({
             grunt : true,
@@ -149,7 +218,6 @@ exports.prepare_build = {
         {
             var i = grunt.file.read('tmp/test/fixtures/VERSION_PATCH.js').indexOf('0.0.2');
 
-            test.strictEqual(code, 0, 'Grunt should finish without errors.');
             test.notStrictEqual(-1, i, 'Should increase the version patch value.');
 
             test.done();

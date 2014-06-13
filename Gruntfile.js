@@ -37,7 +37,8 @@ module.exports = function(grunt) {
                 {
                     expand : true,
                     src : [
-                        'test/fixtures/VERSION_*.js'
+                        'test/fixtures/VERSION_*.js',
+                        'test/fixtures/ENV_*.js'
                     ],
                     dest : 'tmp',
                     cwd : '.'

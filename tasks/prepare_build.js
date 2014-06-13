@@ -16,6 +16,7 @@ module.exports = function (grunt) {
     grunt.registerMultiTask('prepare_build', 'A Grunt plugin to prepare your build process.', function ()
     {
         var options = this.options({
+            version : true,
             versionFile : 'VERSION.js',
             versionMatch : /(\d+\.\d+\.\d+)/g,
             increaseMinor : false,
@@ -35,11 +36,16 @@ module.exports = function (grunt) {
             tagMessage : 'New version'
         });
 
-        var versionStr = version.increase(options);
+        var versionStr,
+            envStr;
+
+        if (options.version) {
+            versionStr = version.increase(options);
+        }
 
         if (options.env) {
             // Update the environment string.
-            environment.update(options);
+            envStr = environment.update(options);
         }
 
         if (options.commit) {

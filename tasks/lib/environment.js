@@ -43,7 +43,7 @@ exports.init = function (grunt)
         grunt.log.writeln('OK. Updated to ' + environmentStr + '.');
 
         // End.
-        return 0;
+        return environmentStr;
     };
 
     // End.
