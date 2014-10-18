@@ -22,7 +22,7 @@ module.exports = function (grunt) {
             increaseMinor : false,
             increasePatch : false,
             //
-            env : true,
+            env : false,
             envFile : 'VERSION.js',
             envMatch : /development/g,
             envName : 'production',
